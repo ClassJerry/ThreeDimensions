@@ -13,8 +13,8 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.res.imageResource
 import kotlin.math.PI
@@ -40,18 +40,10 @@ class MainActivity : ComponentActivity() {
         var offsetX by remember { mutableStateOf(0f) }
         var offsetY by remember { mutableStateOf(0f) }
 
-        Canvas(Modifier.fillMaxSize()) {
-            scale(SCALE) {
-                translate(-offsetX, -offsetY) {
-                    drawImage(imageBack)
-                }
-            }
+        Canvas(Modifier.fillMaxSize().scale(SCALE)) {
+            translate(-offsetX, -offsetY) { drawImage(imageBack) }
             drawImage(imageMid)
-            scale(SCALE) {
-                translate(offsetX, offsetY) {
-                    drawImage(imageFore)
-                }
-            }
+            translate(offsetX, offsetY) { drawImage(imageFore) }
         }
 
         val manager = getSystemService(SensorManager::class.java)
